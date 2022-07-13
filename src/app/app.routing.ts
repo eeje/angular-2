@@ -6,7 +6,11 @@ export const APP_ROUTES: Routes = [
     redirectTo: 'playground',
     pathMatch: 'full'
 },
-
+{
+  path: 'custom-handles',
+  redirectTo: 'custom-handles',
+  pathMatch: 'full'
+},
 {
   path: '**',
   redirectTo: 'playground'

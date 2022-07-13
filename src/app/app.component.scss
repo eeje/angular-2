@@ -1,0 +1,28 @@
+p {
+  font-family: Lato;
+}
+:host {
+  width: 100%;
+  display: block;
+  background-color: var(--ktd-background-color-step-50);
+  box-sizing: border-box;
+
+  .app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background-color: var(--ktd-background-color-step-100);
+    border-bottom: 1px solid var(--ktd-border-color);
+
+    h1 {
+      margin: 0;
+    }
+
+    mat-icon.github-icon {
+      line-height: 32px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
