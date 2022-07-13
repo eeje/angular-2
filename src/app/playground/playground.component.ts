@@ -16,6 +16,7 @@ import {
   ktdTrackById,
 } from '@katoid/angular-grid-layout';
 import { DOCUMENT } from '@angular/common';
+//import { TestService } from './test.service'
 
 @Component({
   selector: 'ktd-playground',
@@ -25,22 +26,25 @@ import { DOCUMENT } from '@angular/common';
 export class KtdPlaygroundComponent implements OnInit, OnDestroy {
   @ViewChild(KtdGridComponent, { static: true }) grid: KtdGridComponent;
   trackById = ktdTrackById;
-
   cols = 12;
   rowHeight = 50;
   compactType: 'vertical' | 'horizontal' | null = 'vertical';
   layout: KtdGridLayout = [];
+
   private resizeSubscription: Subscription;
   data: any;
   options: any;
   constructor(
     private ngZone: NgZone,
+    //public testService: TestService,
     public elementRef: ElementRef,
     @Inject(DOCUMENT) public document: Document
   ) {
     // this.ngZone.onUnstable.subscribe(() => console.log('UnStable'));
   }
   ngOnInit() {
+   // this.testService.loadCart();
+   // this.layout =this.testService.getItems();
     this.resizeSubscription = merge(
       fromEvent(window, 'resize'),
       fromEvent(window, 'orientationchange')
