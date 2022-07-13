@@ -7,21 +7,15 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import {
-  KtdDragEnd,
-  KtdDragStart,
   KtdGridComponent,
   KtdGridLayout,
   KtdGridLayoutItem,
-  KtdResizeEnd,
-  KtdResizeStart,
   ktdTrackById,
 } from '@katoid/angular-grid-layout';
 import { DOCUMENT } from '@angular/common';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
   selector: 'ktd-playground',
@@ -75,6 +69,7 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
     console.log('layout', layout);
     this.layout = layout;
   }
+
   onLayoutUpdated(layout: KtdGridLayout) {
     console.log('on layout updated', layout);
     this.layout = layout;
@@ -97,5 +92,6 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
 
     // Important: Don't mutate the array, create new instance. This way notifies the Grid component that the layout has changed.
     this.layout = [newLayoutItem, ...this.layout];
+    console.log('layout: ', this.layout);
   }
 }
