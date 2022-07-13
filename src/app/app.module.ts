@@ -6,12 +6,10 @@ import { AppComponent } from './app.component';
 import { ROUTING } from './app.routing';
 import { HelloComponent } from './hello.component';
 import { KtdPlaygroundModule } from './playground/playground.module';
-import { DataService} from './data.service';
 
 @NgModule({
-  imports:      [ KtdPlaygroundModule, BrowserModule, FormsModule, ROUTING ],
-  declarations: [ AppComponent, HelloComponent ],
-  bootstrap:    [ AppComponent ],
-  providers: [ DataService]
+  imports: [KtdPlaygroundModule, BrowserModule, FormsModule, ROUTING],
+  declarations: [AppComponent, HelloComponent],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
