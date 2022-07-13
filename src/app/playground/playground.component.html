@@ -1,0 +1,27 @@
+<div class="playground-container">
+  <div class="layout-json"></div>
+  <div class="controls-container">
+    <button mat-raised-button (click)="generateLayout()">
+      Generate layout
+    </button>
+    <button mat-raised-button (click)="addItemToLayout()">Add item</button>
+  </div>
+
+  <div class="grid-container">
+    <ktd-grid
+      [cols]="cols"
+      [rowHeight]="rowHeight"
+      [layout]="layout"
+      [compactType]="compactType"
+      scrollSpeed="4"
+      (layoutUpdated)="onLayoutUpdated($event)"
+    >
+      <ktd-grid-item
+        *ngFor="let item of layout; trackBy: trackById"
+        [id]="item.id"
+      >
+        <div class="grid-item-content">{{ item.id }}</div>
+      </ktd-grid-item>
+    </ktd-grid>
+  </div>
+</div>
