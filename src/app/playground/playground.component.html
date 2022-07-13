@@ -1,12 +1,16 @@
 <div class="playground-container">
   <div class="layout-json"></div>
   <div class="controls-container">
+  <div class="col-6">
     <button mat-raised-button (click)="generateLayout()">
       Generate layout
     </button>
-    <button mat-raised-button (click)="addItemToLayout()">Add item</button>
   </div>
-
+  <div class="col-6"  *ngFor="let data of sampleSuggestionsArray; let i = index">
+    <button mat-raised-button (click)="addItemToLayout(data)">
+      Add item {{data.id}}</button>
+  </div>
+  </div>
   <div class="grid-container">
     <ktd-grid
       [cols]="cols"
@@ -24,6 +28,7 @@
     </ktd-grid>
   </div>
 </div>
+<div><button class="btn btn-primary  " (click)="clearCart(layout)"> Clear Items</button></div>
 <h2 style="margin-top: 16px">Other examples:</h2>
 <div style="display: flex; flex-direction: column">
   <a [routerLink]="['/custom-handles']">Custom handles</a>

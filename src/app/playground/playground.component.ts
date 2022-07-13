@@ -16,7 +16,7 @@ import {
   ktdTrackById,
 } from '@katoid/angular-grid-layout';
 import { DOCUMENT } from '@angular/common';
-//import { TestService } from './test.service'
+import { TestService } from './test.service'
 
 @Component({
   selector: 'ktd-playground',
@@ -30,21 +30,26 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
   rowHeight = 50;
   compactType: 'vertical' | 'horizontal' | null = 'vertical';
   layout: KtdGridLayout = [];
-
+  sampleSuggestionsArray = [
+      {id: '0', x: 0, y: 0, w: 3, h: 3},
+      {id: '1', x: 3, y: 0, w: 3, h: 4},
+      {id: '2', x: 6, y: 0, w: 3, h: 5},
+      {id: '3', x: 9, y: 0, w: 3, h: 6}
+  ];
   private resizeSubscription: Subscription;
   data: any;
   options: any;
   constructor(
     private ngZone: NgZone,
-    //public testService: TestService,
+    public testService: TestService,
     public elementRef: ElementRef,
     @Inject(DOCUMENT) public document: Document
   ) {
     // this.ngZone.onUnstable.subscribe(() => console.log('UnStable'));
   }
   ngOnInit() {
-   // this.testService.loadCart();
-   // this.layout =this.testService.getItems();
+    this.testService.loadCart();
+    this.layout =this.testService.getItems();
     this.resizeSubscription = merge(
       fromEvent(window, 'resize'),
       fromEvent(window, 'orientationchange')
@@ -79,23 +84,35 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
     this.layout = layout;
   }
   /** Adds a grid item to the layout */
-  addItemToLayout() {
-    const maxId = this.layout.reduce(
-      (acc, cur) => Math.max(acc, parseInt(cur.id, 10)),
-      -1
-    );
-    const nextId = maxId + 1;
+  addItemToLayout(item) {
+    // const maxId = this.layout.reduce(
+    //   (acc, cur) => Math.max(acc, parseInt(cur.id, 10)),
+    //   -1
+    // );
+    // const nextId = maxId + 1;
 
-    const newLayoutItem: KtdGridLayoutItem = {
-      id: nextId.toString(),
-      x: 0,
-      y: 0,
-      w: 2,
-      h: 2,
-    };
+    // const newLayoutItem: KtdGridLayoutItem = {
+    //   id: nextId.toString(),
+    //   x: item.x,
+    //   y: item.y,
+    //   w: item.w,
+    //   h: item.h,
+    // };
 
     // Important: Don't mutate the array, create new instance. This way notifies the Grid component that the layout has changed.
-    this.layout = [newLayoutItem, ...this.layout];
+   // this.layout = [newLayoutItem, ...this.layout];
+   if (!this.testService.itemInCart(item)) {
+    //item.qtyTotal = 1;
+    this.testService.addToTest(item); //add items in cart
+    this.layout = [...this.testService.getItems()];
     console.log('layout: ', this.layout);
   }
+}
+ //----- clear cart item
+ clearCart(items) {
+  // this.items.forEach((item, index) => this.cartService.removeItem(index));
+  this.testService.clearCart(items);
+  this.layout = [...this.testService.getItems()];
+}
+
 }

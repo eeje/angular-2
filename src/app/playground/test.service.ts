@@ -15,14 +15,20 @@ export class TestService {
   layout: KtdGridLayout = [];
 
   addToTest(addedItem){
-    this.layout.push(addedItem);
-    console.log(addedItem);
+    this.layout.push({
+      x: addedItem.x,
+        y: 0,
+        w: 2,
+        h: addedItem.y,
+        id: addedItem.id.toString(),
+    });
+    console.log('*', this.layout);
 
     //-----check if there are items already added in cart
     let existingItems = [];
-    if (localStorage.getItem('cart_items')) {
+    if (localStorage.getItem('layout')) {
       //----- update by adding new items
-      existingItems = JSON.parse(localStorage.getItem('cart_items'));
+      existingItems = JSON.parse(localStorage.getItem('layout'));
       existingItems = [addedItem, ...existingItems];
       console.log('Items exists');
     }
@@ -37,15 +43,15 @@ export class TestService {
     return this.layout;
   }
   loadCart(): void {
-    this.layout = JSON.parse(localStorage.getItem('cart_items')) ?? [];
+    this.layout = JSON.parse(localStorage.getItem('layout')) ?? [];
   }
   saveCart(): void {
-    localStorage.setItem('cart_items', JSON.stringify(this.layout));
+    localStorage.setItem('layout', JSON.stringify(this.layout));
   }
   clearCart(items) {
     this.layout = [];
 
-    localStorage.removeItem('cart_items');
+    localStorage.removeItem('layout');
   }
   removeItem(item) {
     const index = this.layout.findIndex((o) => o.id === item.id);
