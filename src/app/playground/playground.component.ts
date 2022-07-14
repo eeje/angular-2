@@ -17,6 +17,7 @@ import {
 } from '@katoid/angular-grid-layout';
 import { DOCUMENT } from '@angular/common';
 import { TestService } from './test.service'
+import { ktdArrayRemoveItem } from '../utils';
 
 @Component({
   selector: 'ktd-playground',
@@ -31,14 +32,16 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
   compactType: 'vertical' | 'horizontal' | null = 'vertical';
   layout: KtdGridLayout = [];
   sampleSuggestionsArray = [
-      {id: '0', x: 0, y: 0, w: 3, h: 3},
-      {id: '1', x: 3, y: 0, w: 3, h: 4},
-      {id: '2', x: 6, y: 0, w: 3, h: 5},
-      {id: '3', x: 9, y: 0, w: 3, h: 6}
+      {id: 0, type: 'chart', x: 0, y: 0, w: 3, h: 3},
+      {id: 1, type: 'table', x: 3, y: 0, w: 3, h: 4},
+      {id: 2, type: 'text', x: 6, y: 0, w: 3, h: 5},
+      {id: 3, type: 'note', x: 9, y: 0, w: 3, h: 6}
   ];
+  typeArray = [];
   private resizeSubscription: Subscription;
   data: any;
   options: any;
+  disableRemove = false;
   constructor(
     private ngZone: NgZone,
     public testService: TestService,
@@ -50,6 +53,7 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
   ngOnInit() {
    this.testService.loadCart();
    this.layout =this.testService.getItems();
+   this.typeArray = this.testService.gettypeArray();
     this.resizeSubscription = merge(
       fromEvent(window, 'resize'),
       fromEvent(window, 'orientationchange')
@@ -75,7 +79,7 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
         // static: Math.random() < 0.05
       });
     }
-    console.log('layout', layout);
+   // console.log('layout', layout);
      this.layout = layout;
   }
 
@@ -87,11 +91,12 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
   }
   /** Adds a grid item to the layout */
   addItemToLayout(item) {
-    const maxId = this.layout.reduce(
-      (acc, cur) => Math.max(acc, parseInt(cur.id, 10)),
-      -1
-    );
-    const nextId = maxId + 1;
+    // const maxId = this.layout.reduce(
+    //   (acc, cur) => Math.max(acc, parseInt(cur.id, 10)),
+    //   -1
+    // );
+    // const nextId = maxId + 1;
+    const nextId = this.typeArray.length;
 
     const newLayoutItem: KtdGridLayoutItem = {
       id: nextId.toString(),
@@ -103,7 +108,12 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
 
     // Important: Don't mutate the array, create new instance. This way notifies the Grid component that the layout has changed.
     this.layout = [newLayoutItem, ...this.layout];
+    //this.typeArray.push(item);
+    this.typeArray = [...this.typeArray, item]
     this.testService.layoutUpdated(this.layout);
+    this.testService.typeArrayUpdated(this.typeArray)
+    console.log('*: typeA', this.typeArray)
+    console.log('*: addlay', this.layout)
   //  if (!this.testService.itemInCart(item)) {
   //   //item.qtyTotal = 1;
   //   this.testService.addToTest(item); //add items in cart
@@ -116,6 +126,15 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
  // this.items.forEach((item, index) => this.testService.removeItem(index));
  this.testService.clearCart(items);
  this.layout = [...this.testService.getItems()];
+ this.typeArray = [...this.testService.gettypeArray()];
 }
-
+  /** Removes the item from the layout */
+  removeItem(id: string) {
+    // Important: Don't mutate the array. Let Angular know that the layout has changed creating a new reference.
+    this.layout = ktdArrayRemoveItem(this.layout, (item) => item.id === id);
+    this.testService.removeItem(id)
+    this.testService.layoutUpdated(this.layout);
+    this.testService.typeArrayUpdated(this.typeArray)
+    console.log('remove layout ', this.layout)
+  }
 }

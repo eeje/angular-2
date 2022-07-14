@@ -11,7 +11,7 @@
       *ngFor="let data of sampleSuggestionsArray; let i = index"
     >
       <button mat-raised-button (click)="addItemToLayout(data)">
-        Add item {{ data.id }}
+        Add {{ data.type }}
       </button>
     </div>
   </div>
@@ -27,7 +27,12 @@
         *ngFor="let item of layout; trackBy: trackById"
         [id]="item.id"
       >
-        <div class="grid-item-content">{{ item.id }}</div>
+        <div class="grid-item-content">{{typeArray[item.id].type}}{{ item.id }}</div>
+        <div
+        class="grid-item-remove-handle"
+        *ngIf="!disableRemove"
+        (click)="removeItem(item.id)"
+      ></div>
       </ktd-grid-item>
     </ktd-grid>
   </div>

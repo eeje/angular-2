@@ -24,7 +24,7 @@ export class KtdCustomHandlesComponent implements OnInit, OnDestroy {
     constructor(@Inject(DOCUMENT) public document: Document) { }
 
     ngOnInit() {
-        console.log('layout: ', this.layout);
+       // console.log('layout: ', this.layout);
         this.resizeSubscription = merge(
             fromEvent(window, 'resize'),
             fromEvent(window, 'orientationchange')
