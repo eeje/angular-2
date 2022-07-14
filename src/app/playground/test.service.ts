@@ -48,6 +48,10 @@ export class TestService {
   saveCart(): void {
     localStorage.setItem('layout', JSON.stringify(this.layout));
   }
+  layoutUpdated(layout: KtdGridLayout){
+    this.layout = layout;
+    this.saveCart()
+  }
   clearCart(items) {
     this.layout = [];
 

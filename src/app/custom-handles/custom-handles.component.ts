@@ -24,6 +24,7 @@ export class KtdCustomHandlesComponent implements OnInit, OnDestroy {
     constructor(@Inject(DOCUMENT) public document: Document) { }
 
     ngOnInit() {
+        console.log('layout: ', this.layout);
         this.resizeSubscription = merge(
             fromEvent(window, 'resize'),
             fromEvent(window, 'orientationchange')
@@ -40,6 +41,7 @@ export class KtdCustomHandlesComponent implements OnInit, OnDestroy {
 
     onLayoutUpdated(layout: KtdGridLayout) {
         this.layout = layout;
+        console.log('layout: ', this.layout);
     }
 
 }
