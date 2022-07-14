@@ -22,21 +22,21 @@ export class TestService {
         h: addedItem.y,
         id: addedItem.id.toString(),
     });
-    console.log('*', this.layout);
+    console.log('*', addedItem);
 
-    //-----check if there are items already added in cart
-    let existingItems = [];
-    if (localStorage.getItem('layout')) {
-      //----- update by adding new items
-      existingItems = JSON.parse(localStorage.getItem('layout'));
-      existingItems = [addedItem, ...existingItems];
-      console.log('Items exists');
-    }
-        //-----if no items, add new items
-    else {
-      console.log('NO items exists');
-      existingItems = [addedItem];
-    }
+    // //-----check if there are items already added in cart
+    // let existingItems = [];
+    // if (localStorage.getItem('layout')) {
+    //   //----- update by adding new items
+    //   existingItems = JSON.parse(localStorage.getItem('layout'));
+    //   existingItems = [addedItem, ...existingItems];
+    //   console.log('Items exists');
+    // }
+    //     //-----if no items, add new items
+    // else {
+    //   console.log('NO items exists');
+    //   existingItems = [addedItem];
+    // }
     this.saveCart();
   }
   getItems() {

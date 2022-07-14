@@ -16,7 +16,7 @@ import {
   ktdTrackById,
 } from '@katoid/angular-grid-layout';
 import { DOCUMENT } from '@angular/common';
-import { TestService } from './test.service'
+//import { TestService } from './test.service'
 
 @Component({
   selector: 'ktd-playground',
@@ -41,15 +41,15 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
   options: any;
   constructor(
     private ngZone: NgZone,
-    public testService: TestService,
+   // public testService: TestService,
     public elementRef: ElementRef,
     @Inject(DOCUMENT) public document: Document
   ) {
     // this.ngZone.onUnstable.subscribe(() => console.log('UnStable'));
   }
   ngOnInit() {
-    this.testService.loadCart();
-    this.layout =this.testService.getItems();
+  //  this.testService.loadCart();
+   // this.layout =this.testService.getItems();
     this.resizeSubscription = merge(
       fromEvent(window, 'resize'),
       fromEvent(window, 'orientationchange')
@@ -85,34 +85,34 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
   }
   /** Adds a grid item to the layout */
   addItemToLayout(item) {
-    // const maxId = this.layout.reduce(
-    //   (acc, cur) => Math.max(acc, parseInt(cur.id, 10)),
-    //   -1
-    // );
-    // const nextId = maxId + 1;
+    const maxId = this.layout.reduce(
+      (acc, cur) => Math.max(acc, parseInt(cur.id, 10)),
+      -1
+    );
+    const nextId = maxId + 1;
 
-    // const newLayoutItem: KtdGridLayoutItem = {
-    //   id: nextId.toString(),
-    //   x: item.x,
-    //   y: item.y,
-    //   w: item.w,
-    //   h: item.h,
-    // };
+    const newLayoutItem: KtdGridLayoutItem = {
+      id: nextId.toString(),
+      x: item.x,
+      y: item.y,
+      w: item.w,
+      h: item.h,
+    };
 
     // Important: Don't mutate the array, create new instance. This way notifies the Grid component that the layout has changed.
-   // this.layout = [newLayoutItem, ...this.layout];
-   if (!this.testService.itemInCart(item)) {
-    //item.qtyTotal = 1;
-    this.testService.addToTest(item); //add items in cart
-    this.layout = [...this.testService.getItems()];
-    console.log('layout: ', this.layout);
-  }
+    this.layout = [newLayoutItem, ...this.layout];
+  //  if (!this.testService.itemInCart(item)) {
+  //   //item.qtyTotal = 1;
+  //   this.testService.addToTest(item); //add items in cart
+  //   this.layout = [...this.testService.getItems()];
+     console.log('layout: ', this.layout);
+  // }
 }
  //----- clear cart item
- clearCart(items) {
+ //clearCart(items) {
   // this.items.forEach((item, index) => this.cartService.removeItem(index));
-  this.testService.clearCart(items);
-  this.layout = [...this.testService.getItems()];
-}
+ // this.testService.clearCart(items);
+ // this.layout = [...this.testService.getItems()];
+//}
 
 }
