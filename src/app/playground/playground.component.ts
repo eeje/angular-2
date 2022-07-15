@@ -51,7 +51,7 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
     // this.ngZone.onUnstable.subscribe(() => console.log('UnStable'));
   }
   ngOnInit() {
-   this.testService.loadCart();
+  this.testService.loadCart();
    this.layout =this.testService.getItems();
    this.typeArray = this.testService.gettypeArray();
     this.resizeSubscription = merge(
@@ -85,9 +85,10 @@ export class KtdPlaygroundComponent implements OnInit, OnDestroy {
 
   onLayoutUpdated(layout: KtdGridLayout) {
     console.log('on layout updated', layout);
+     this.layout = layout;
     this.testService.layoutUpdated(layout);
    //this.testService.saveCart();
-   // this.layout = layout;
+   
   }
   /** Adds a grid item to the layout */
   addItemToLayout(item) {
